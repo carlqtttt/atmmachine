@@ -6,6 +6,7 @@
 package Admin;
 
 import Login.DSBLogin;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,11 +14,12 @@ import Login.DSBLogin;
  */
 public class DSBAdmin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DSBAdmin
-     */
+    DefaultTableModel tables;
+    
     public DSBAdmin() {
         initComponents();
+        tables = (DefaultTableModel)jTable1.getModel();
+        DSBLogin.showTable(tables);
     }
 
     /**
@@ -37,13 +39,10 @@ public class DSBAdmin extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "PIN", "EMAIL", "CON TACT", "STATUS", "TYPE"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

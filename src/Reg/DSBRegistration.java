@@ -36,7 +36,7 @@ public class DSBRegistration extends javax.swing.JFrame {
 
         try (Connection cn = new DBConnector().getConnection()) {
 
-            PreparedStatement checkerStmt = cn.prepareStatement("SELECT COUNT(*) FROM jose WHERE email = ? OR user = ? OR contact = ?");
+            PreparedStatement checkerStmt = cn.prepareStatement("SELECT COUNT(*) FROM machine WHERE email = ? OR usernames = ? OR contact = ?");
             checkerStmt.setString(1, email);
             checkerStmt.setString(2, user);
             checkerStmt.setString(3, contact);
@@ -51,7 +51,7 @@ public class DSBRegistration extends javax.swing.JFrame {
 
             cn.setAutoCommit(false);
 
-            PreparedStatement insertStmt = cn.prepareStatement("INSERT INTO jose (email,contact,user,pass,status) VALUES (?,?,?,?,'Active')");
+            PreparedStatement insertStmt = cn.prepareStatement("INSERT INTO machine (email,contact,usernames,passwords,status) VALUES (?,?,?,?,'Active')");
             insertStmt.setString(1, email);
             insertStmt.setString(2, contact);
             insertStmt.setString(3, user);

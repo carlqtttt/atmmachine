@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,7 +32,7 @@ public class DSBLogin extends javax.swing.JFrame {
     public static boolean loginAccount(String username, String password) {
         try (Connection cn = new DBConnector().getConnection()) {
 
-            PreparedStatement checkStmt = cn.prepareStatement("SELECT COUNT(*) FROM jose WHERE user = ? AND pass = ? AND status = 'Active'");
+            PreparedStatement checkStmt = cn.prepareStatement("SELECT COUNT(*) FROM machine WHERE usernames = ? AND passwords = ? AND status = 'Active'");
             checkStmt.setString(1, username);
             checkStmt.setString(2, password);
             ResultSet result = checkStmt.executeQuery();
@@ -45,7 +46,21 @@ public class DSBLogin extends javax.swing.JFrame {
         }
     }
     
-    
+    public static void showTable(DefaultTableModel table) {
+
+        try {
+
+            ResultSet rs = new DBConnector().getData("SELECT * FROM machine");
+
+            while (rs.next()) {
+                table.addRow(new String[]{rs.getString("id"), rs.getString("email"), rs.getString("contact"), rs.getString("usernames"), rs.getString("passwords"), rs.getString("status")});
+            }
+
+        } catch (SQLException er) {
+            System.out.println("Error: " + er.getMessage());
+        }
+
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
